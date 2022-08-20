@@ -1,16 +1,21 @@
-var cityEl = document.getElementById('city');
-var iconEl = document.getElementById('now-icon');
-var tempEl = document.getElementById('now-temp');
-var humidEl = document.getElementById('now-humid');
-var windEl = document.getElementById('now-wind');
+var cityEl = $('#city');
+var iconEl = $('#now-icon');
+var tempEl = $('#now-temp');
+var humidEl = $('#now-humid');
+var windEl = $('#now-wind');
 var currentDateEl = $('#now-date');
 var today = moment();
 var indexEl = $('#now-uv');
-//var fDay
+var searchCityEl = $('#searchInput');
 
+$('#searchBtn').click(function() {
+    let cityName = searchCityEl.val();
+    getCurrentWeather(cityName);
+    getForecast(cityName);
+});
 
 function getCurrentWeather(cityName) {
-    const queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',us&units=imperial&appid=4b0de6a21705d45f39b918e869296285'
+    var queryURL = 'https://api.openweathermap.org/data/2.5/weather?q=' + cityName + ',us&units=imperial&appid=4b0de6a21705d45f39b918e869296285'
     $.ajax({
         url: queryURL,
         method: 'GET'
@@ -26,6 +31,17 @@ function getCurrentWeather(cityName) {
     
 
         console.log(city,temp,humidity,windSpeed);
+
+        cityEl.text(city);
+        iconEl.html(icon);
+        currentDateEl.text(today.format('(MM/DD/YYYY)'));
+        tempEl.text(temp);
+        humidEl.text(humidity);
+        windEl.text(windSpeed);
+
+        getUVIndex(lat,lon);
+
+        /*
         var listCity = document.createElement('span');
         var listIcon = document.createElement('span');
         var listTemp = document.createElement('p');
@@ -44,9 +60,7 @@ function getCurrentWeather(cityName) {
         tempEl.appendChild(listTemp);
         humidEl.appendChild(listHumid);
 
-        windEl.appendChild(listWind);
-
-        getUVIndex(lat,lon);
+        windEl.appendChild(listWind); */
 
     });
 };
@@ -80,7 +94,7 @@ function getForecast(cityName) {
 };
 
 function getUVIndex(lat, lon) {
-    const queryURL = 'https://api.openweathermap.org/data/2.5/uvi?lat=' + lat + '&lon=' + lon + '&appid=4b0de6a21705d45f39b918e869296285'
+    var queryURL = 'https://api.openweathermap.org/data/2.5/uvi?lat=' + lat + '&lon=' + lon + '&appid=4b0de6a21705d45f39b918e869296285'
     $.ajax({
         url: queryURL,
         method: 'GET'
@@ -97,18 +111,20 @@ function getUVIndex(lat, lon) {
 function colorUV(value) {
     
     if (value < 3) {
-        indexEl.attr('class', 'bg-success')
+        indexEl.attr('class', 'bg-success text-light font-weight-bold border border-dark rounded p-1')
     } else if (value < 7) {
-        indexEl.attr('class', 'bg-warning')
+        indexEl.attr('class', 'bg-warning text-light font-weight-bold border border-dark rounded p-1')
     } else {
-        indexEl.attr('class', 'bg-danger')
+        indexEl.attr('class', 'bg-danger text-light font-weight-bold border border-dark rounded p-1')
     };
 };
 
 function getIconElement(code) {
     var iconUrl = 'http://openweathermap.org/img/wn/' + code + '@2x.png'
-    return document.getElementById("now-icon").innerHTML="<img src='" + iconUrl + "'>";
+    return `<img src="${iconUrl}">`;
+
+    //return document.getElementById("now-icon").innerHTML="<img src='" + iconUrl + "'>";
 };
 
-getCurrentWeather("San Antonio");
-getForecast("San Antonio");
+//getCurrentWeather("San Antonio");
+//getForecast("San Antonio");

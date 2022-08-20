@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Weather Dashboard</title>
 </head>
@@ -17,23 +18,30 @@
     <main class="flex-row justify-space-between">
         <div class="row">
             <div class="col-md-4 card">
-                <h2>Search</h2>
+                <h2>Search for a City:</h2>
+                <input type="text" class="form-control" placeholder="ex: New York" aria-label="City name"
+                aria-describedby="searchBtn" id="searchInput">
+
+                <button class="btn btn-primary" type="button" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+                
             </div>
-            <div class="col-md-8 card">
-                <div class="row">
-                    <h2 id="now-headline">
+            <div class="col-md-8">
+                <div class="card-body border border-dark">
+                <div class="row m-1">
+                    <h2>
                         <span id="city"></span>
-                        <span id="now-icon"></span>
                         <span id="now-date"></span>
+                        <span id="now-icon"></span>
                     </h2>
                 </div>
-                <div>
-                    <ol id="now-temp"></ol>
-                    <ol id="now-humid"></ol>
-                    <ol id="now-wind"></ol>
-                    <ol>
-                    <span id="now-uv"></span>
-                    </ol>
+                <div class="font-weight-bold">
+                    <p>Temp: <span id="now-temp"></span><span>&deg;F</span></p>
+                    <p>Humidity: <span id="now-humid"></span><span>%</span></p>
+                    <p>Wind: <span id="now-wind"></span><span>MPH</span></p>
+                    <p>UV Index: <span id="now-uv"></span></p>
+                </div>
                 </div>
                 <div>
                     <h2 class="text-center">5-Day Forecast</h2>
@@ -41,11 +49,11 @@
                 <div class="row">
                     
                     <div class="card-deck m-2 w-100">
-                        <div class="card bg-dark text-light p-2" id="day-1"></div>
-                        <div class="card bg-primary" id="day-2"></div>
-                        <div class="card bg-primary" id="day-3"></div>
-                        <div class="card bg-primary" id="day-4"></div>
-                        <div class="card bg-primary" id="day-5"></div>
+                        <div class="card bg-primary text-light text-center p-2 m-1" id="day-1"></div>
+                        <div class="card bg-primary text-light text-center p-2 m-1" id="day-2"></div>
+                        <div class="card bg-primary text-light text-center p-2 m-1" id="day-3"></div>
+                        <div class="card bg-primary text-light text-center p-2 m-1" id="day-4"></div>
+                        <div class="card bg-primary text-light text-center p-2 m-1" id="day-5"></div>
                     </div>
                 </div>
             </div>
