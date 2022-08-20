@@ -4,9 +4,9 @@ var tempEl = document.getElementById('now-temp');
 var humidEl = document.getElementById('now-humid');
 var windEl = document.getElementById('now-wind');
 var currentDateEl = $('#now-date');
-var today = dayjs();
+var today = moment();
 var indexEl = $('#now-uv');
-var fDay
+//var fDay
 
 
 function getCurrentWeather(cityName) {
