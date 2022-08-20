@@ -21,17 +21,40 @@
             </div>
             <div class="col-md-8 card">
                 <div class="row">
-                    <h2>City/Dates</h2>
+                    <h2 id="now-headline">
+                        <span id="city"></span>
+                        <span id="now-icon"></span>
+                        <span id="now-date"></span>
+                    </h2>
+                </div>
+                <div>
+                    <ol id="now-temp"></ol>
+                    <ol id="now-humid"></ol>
+                    <ol id="now-wind"></ol>
+                    <ol>
+                    <span id="now-uv"></span>
+                    </ol>
+                </div>
+                <div>
+                    <h2 class="text-center">5-Day Forecast</h2>
                 </div>
                 <div class="row">
-                    <h2>Forecast</h2>
+                    
+                    <div class="card-deck m-2 w-100">
+                        <div class="card bg-dark text-light p-2" id="day-1"></div>
+                        <div class="card bg-primary" id="day-2"></div>
+                        <div class="card bg-primary" id="day-3"></div>
+                        <div class="card bg-primary" id="day-4"></div>
+                        <div class="card bg-primary" id="day-5"></div>
+                    </div>
                 </div>
             </div>
-
         </div>        
     </main>
     
-
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+   <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
