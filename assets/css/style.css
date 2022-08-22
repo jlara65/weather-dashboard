@@ -1,8 +1,17 @@
-* {
-    box-sizing: border-box;
-}
-
+/* Set gradient background for Title */ 
 header {
     background: rgb(2,0,36);
     background: linear-gradient(260deg, rgba(2,0,36,1) 0%, rgba(30,30,173,1) 87%, rgba(0,212,255,1) 100%);
+}
+
+/* Search bar input border styles */
+#searchInput {
+    border: 2px grey;
+    border-style: inset;
+}
+
+/* Current Weather border styles */
+#currentDiv {
+    border: grey;
+    border-style: inset;
 }

@@ -1,3 +1,4 @@
+// set the variables
 var cityEl = $('#city');
 var iconEl = $('#now-icon');
 var tempEl = $('#now-temp');
@@ -6,29 +7,27 @@ var windEl = $('#now-wind');
 var currentDateEl = $('#now-date');
 var today = dayjs();
 var indexEl = $('#now-uv');
-//var searchBtnEl = $('#searchBtn')
 var searchCityEl = $('#searchInput');
 var searchHistoryEl = $('#searchHistory');
 var searchDivEl = $('#searchDiv');
 var resultDivEl = $('#resultsDiv');
-
 var maxItems = 10;
+
 let searchHistArray;
 let lastCity;
 
+// Set event listener for the search button
 $('#searchBtn').click (() => {
     let cityName = searchCityEl.val();
     
     searchMachine(cityName);
-    //getCurrentWeather(cityName);
-    //getForecast(cityName);
     searchCityEl.val('');
 });
 
+// When the page loaded up first function to run to search the history from localStorage. If exist and send to the functions
 $(document).ready(() => {
     searchHistArray = JSON.parse(localStorage.getItem('searchHistory')) || [];
     lastCity = searchHistArray[0];
-    console.log(lastCity);
     updateSearchHist();
 
     if (lastCity) {
@@ -41,6 +40,7 @@ $(document).ready(() => {
     };
 });
 
+// Receive the city name from search bar to start update the search history and send it to current weather and forecast function
 function searchMachine(cityName) {
     if (searchHistArray.includes(cityName)) {
         let freqIndex = searchHistArray.indexOf(cityName);
@@ -58,6 +58,7 @@ function searchMachine(cityName) {
     searchDivEl.removeClass('col-lg-12')
 };
 
+// Receive the data from searchMachine and start storage in localStorage array and added the city name button to the history search list.
 function updateSearchHist() {
     if (searchHistArray.length > maxItems) {
         searchHistArray.pop();
@@ -76,14 +77,13 @@ function updateSearchHist() {
     };
 }; 
 
+// Start the Current Weather API data when receive the city name from other functions. Then start feed the weather api data.
 function getCurrentWeather(cityName) {
     var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},us&units=imperial&appid=4b0de6a21705d45f39b918e869296285`
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: 'GET'
     }).then((response) => {
-        console.log(response);
         var city = response.name;
         var icon = getIconElement(response.weather[0].icon);
         var temp = response.main.temp;
@@ -91,9 +91,6 @@ function getCurrentWeather(cityName) {
         var windSpeed = response.wind.speed;
         var lat = response.coord.lat;
         var lon = response.coord.lon;
-    
-
-        //console.log(city,temp,humidity,windSpeed);
 
         cityEl.text(city);
         iconEl.html(icon);
@@ -102,42 +99,20 @@ function getCurrentWeather(cityName) {
         humidEl.text(humidity);
         windEl.text(windSpeed);
 
-        console.log(lat,lon);
         getUVIndex(lat,lon);
-
-        /*
-        var listCity = document.createElement('span');
-        var listIcon = document.createElement('span');
-        var listTemp = document.createElement('p');
-        var listHumid = document.createElement('p');
-        var listWind = document.createElement('p');
-        
-        
-        listCity.innerText = city;
-        listIcon.innerText = icon;
-        listTemp.innerText = temp;
-        currentDateEl.text(today.format('MM/DD/YYYY'));
-        listHumid.innerText = humidity;
-        listWind.innerText = windSpeed;
-        
-        cityEl.appendChild(listCity);
-        tempEl.appendChild(listTemp);
-        humidEl.appendChild(listHumid);
-
-        windEl.appendChild(listWind); */
 
     });
 };
 
+// Start the forecast weather API data when receive the city name from other function. Then start feed the forecast weather api data
 function getForecast(cityName) {
     var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},us&units=imperial&cnt=5&appid=4b0de6a21705d45f39b918e869296285`;
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: 'GET'
     }).then((response) => {
         var daysArray = response.list
-        console.log(daysArray);
+       
         for (let i = 0; i < daysArray.length; i++) {
             var date = today.add(i + 1, 'day').format('MM/DD/YYYY');
             var fTemp = daysArray[i].main.temp;
@@ -157,27 +132,28 @@ function getForecast(cityName) {
     });
 };
 
+// Function to receive the icon info and return to getCurrentWeather and getForecast functions to display the icon weather.
 function getIconElement(code) {
     var iconUrl = `http://openweathermap.org/img/wn/${code}@2x.png`
     return `<img src="${iconUrl}">`;
 };
 
+// Function to look up another query URL for UV Index after receive latitude and longitude from both getCurrentWeather and getForecast functions 
 function getUVIndex(lat, lon) {
     var queryURL = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=4b0de6a21705d45f39b918e869296285`
     $.ajax({
         url: queryURL,
         method: 'GET'
     }).then((response) => {
-        console.log(response);
         var uvi = response.value;
 
-        console.log(uvi);
         indexEl.text(uvi);
         colorUV(uvi);
         
     });
 };
 
+// Function to set the values of UV Index to color.
 function colorUV(uvi) {
     
     if (uvi < 3) {
@@ -188,8 +164,3 @@ function colorUV(uvi) {
         indexEl.attr('class', 'bg-danger text-light font-weight-bold border border-dark rounded p-1')
     };
 };
-
-
-
-//getCurrentWeather("San Antonio");
-//getForecast("San Antonio");
