@@ -113,7 +113,7 @@ function getForecast(cityName) {
     }).then((response) => {
         var daysArray = response.list
        
-        for (let i = 0; i < daysArray.length; i++) {
+        for (var i = 0; i < daysArray.length; i++) {
             var date = today.add(i + 1, 'day').format('MM/DD/YYYY');
             var fTemp = daysArray[i].main.temp;
             var fHumid = daysArray[i].main.humidity;
